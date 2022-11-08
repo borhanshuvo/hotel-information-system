@@ -20,8 +20,8 @@ const Hotel = () => {
   }, [number]);
 
   return (
-    <section className="pt-5">
-      <h1 className="text-center fw-700 fs-20 pb-5">Hotel</h1>
+    <section className="py-5 my-md-5" id="hotel">
+      <h1 className="text-center fw-700 pb-5">Hotel</h1>
       <div className="container">
         <div className="row justify-content-center">
           {allHotels?.map((hotel, index) => (

@@ -9,6 +9,16 @@
   .login-style {
     width: 80%;
   }
+
+  .right-38 {
+    right: 20px;
+    bottom: -50px;
+  }
+
+  .left-38 {
+    top: -38px;
+    left: 5px;
+  }
 }
 
 @media only screen and (min-width: 600px) {

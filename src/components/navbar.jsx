@@ -25,33 +25,41 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <Link className="nav-link active" aria-current="page" to="/">
+              <a className="nav-link active" aria-current="page" href="/">
                 Home
-              </Link>
+              </a>
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link active" aria-current="page" to="">
+              <a className="nav-link active" aria-current="page" href="#hotel">
                 Hotel
-              </Link>
+              </a>
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link active" aria-current="page" to="">
+              <a
+                className="nav-link active"
+                aria-current="page"
+                href="#about-us"
+              >
                 About Us
-              </Link>
+              </a>
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link active" aria-current="page" to="">
+              <a className="nav-link active" aria-current="page" href="#review">
                 Review
-              </Link>
+              </a>
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link active" aria-current="page" to="">
+              <a
+                className="nav-link active"
+                aria-current="page"
+                href="#contact-us"
+              >
                 Contact Us
-              </Link>
+              </a>
             </li>
 
             {user?.email ? (
