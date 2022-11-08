@@ -44,7 +44,7 @@ const Navbar = () => {
                 </div>
                 <ul className="dropdown-menu dashboard-menu">
                   <li>
-                    <Link className="dropdown-item" to="profile">
+                    <Link className="dropdown-item" to="">
                       <FaUserEdit /> Edit Account
                     </Link>
                   </li>
@@ -155,7 +155,7 @@ const Navbar = () => {
 
               <div className="d-block d-md-none">
                 <li>
-                  <Link className="dropdown-item" to="profile">
+                  <Link className="dropdown-item" to="">
                     Edit Account
                   </Link>
                 </li>

@@ -1,7 +1,41 @@
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { CgProfile } from "react-icons/cg";
+import { toast } from "react-toastify";
+import { ContextState } from "../../../context/contextProvider";
+import { BASE_URL } from "../../../data/baseURL";
 
 const Admin = () => {
+  const [hotels, setHotels] = useState([]);
+  const [users, setUsers] = useState([]);
+  const { accessToken } = ContextState();
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/hotel/get`)
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.success) {
+          setHotels(result.hotels);
+        } else {
+          toast.error(result.message);
+        }
+      });
+
+    fetch(`${BASE_URL}/user/get`, {
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.success) {
+          setUsers(result.users);
+        } else {
+          toast.error(result.message);
+        }
+      });
+  }, [accessToken]);
+
   return (
     <div>
       <Helmet>
@@ -14,7 +48,7 @@ const Admin = () => {
           <div className="card-shadow d-flex justify-content-between align-items-center fs-18 fw-700">
             <div>
               <p>Total Users</p>
-              <p>10</p>
+              <p>{users?.length}</p>
             </div>
             <div>
               <p className="profile-card-icon">
@@ -27,7 +61,7 @@ const Admin = () => {
           <div className="card-shadow d-flex justify-content-between align-items-center fs-18 fw-700">
             <div>
               <p>Total Hotel</p>
-              <p>10</p>
+              <p>{hotels?.length}</p>
             </div>
             <div>
               <p className="profile-card-icon">
