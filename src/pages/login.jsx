@@ -14,7 +14,7 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { navigate, setUser } = ContextState();
+  const { navigate, setUser, setAccessToken } = ContextState();
 
   const onSubmitLogin = (data) => {
     fetch(`${BASE_URL}/login/post`, {
@@ -31,6 +31,7 @@ const Login = () => {
       .then((result) => {
         if (result.success) {
           setUser(result?.user);
+          setAccessToken(result.accessToken);
           localStorage.setItem("userInfo", JSON.stringify(result?.user));
           localStorage.setItem("token", JSON.stringify(result.accessToken));
           navigate("/dashboard");

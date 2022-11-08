@@ -3,8 +3,8 @@ import { Helmet } from "react-helmet";
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
-import { ContextState } from "../context/contextProvider";
-import { BASE_URL } from "../data/baseURL";
+import { ContextState } from "../../context/contextProvider";
+import { BASE_URL } from "../../data/baseURL";
 
 const ManageUser = () => {
   const [allUsers, setAllUsers] = useState([]);

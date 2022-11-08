@@ -1,53 +1,46 @@
-import React from "react";
-import image_3 from "../images/image-2506988.jpg";
-import image_1 from "../images/image-261169.jpg";
-import image_2 from "../images/image-594077.jpg";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { ContextState } from "../context/contextProvider";
+import { BASE_URL } from "../data/baseURL";
 
 const Hotel = () => {
+  const [allHotels, setAllHotels] = useState([]);
+  const { number } = ContextState();
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/hotel/get`)
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.success) {
+          setAllHotels(result.hotels);
+        } else {
+          toast.error(result.message);
+        }
+      });
+  }, [number]);
+
   return (
     <section className="pt-5">
       <h1 className="text-center fw-700 fs-20 pb-5">Hotel</h1>
       <div className="container">
-        <div className="row">
-          <div className="col-md-4">
-            <div className="card">
-              <div className="card-header">
-                <img src={image_1} className="img-fluid" alt="" />
-                <div className="card-body">
-                  <p className="card-title">Ujan Vati Restaurent</p>
-                  <p className="card-title">
-                    Hasan Plaza, Station Road, Gazipur
-                  </p>
+        <div className="row justify-content-center">
+          {allHotels?.map((hotel, index) => (
+            <div className="col-md-4 mb-4" key={index}>
+              <div className="card cursor-pointer card-hover-1">
+                <div className="card-header">
+                  <img
+                    src={`${BASE_URL}/${hotel?.hotelImageURL}`}
+                    className="img-fluid"
+                    alt=""
+                  />
+                  <div className="card-body">
+                    <p className="card-title">{hotel?.name}</p>
+                    <p className="card-title">{hotel?.address}</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="col-md-4">
-            <div className="card">
-              <div className="card-header">
-                <img src={image_2} className="img-fluid" alt="" />
-                <div className="card-body">
-                  <p className="card-title">Hotel Nirala , Nirala Tower</p>
-                  <p className="card-title">
-                    Hasan Plaza, Station Road, Gazipur
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-4">
-            <div className="card">
-              <div className="card-header">
-                <img src={image_3} className="img-fluid" alt="" />
-                <div className="card-body">
-                  <p className="card-title">Hotel River View, Ishakha Road</p>
-                  <p className="card-title">
-                    Hasan Plaza, Station Road, Gazipur
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

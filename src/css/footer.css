@@ -1,0 +1,20 @@
+/* Footer Design Start */
+.social-icon:hover {
+  color: #f49807;
+  transform: scale(1.2);
+  transition: all 0.5s ease;
+}
+
+.social-margin {
+  margin: 0rem 4rem 0rem 0rem;
+}
+
+.footer-text {
+  color: #fff;
+}
+
+.footer-text:hover {
+  color: #f49807;
+}
+
+/* Footer Design End */

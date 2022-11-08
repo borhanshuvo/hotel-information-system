@@ -2,7 +2,6 @@ import { FaUserEdit } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { Link, NavLink } from "react-router-dom";
 import { ContextState } from "../../context/contextProvider";
-// import fastlane from "../../images/fastlane.png";
 
 const Navbar = () => {
   const { user, setUser, navigate } = ContextState();
@@ -13,7 +12,6 @@ const Navbar = () => {
         <div className="container">
           <div>
             <Link className="navbar-brand fw-600" to="/">
-              {/* <img src={fastlane} className="fastlane-logo" alt="" /> */}
               Hotel Information System
             </Link>
           </div>
@@ -118,12 +116,12 @@ const Navbar = () => {
                 <p className="nav-link cursor-pointer">Hotel</p>
                 <ul className="dropdown-menu dashboard-menu">
                   <li>
-                    <Link className="dropdown-item" to="admin/add-user">
+                    <Link className="dropdown-item" to="admin/add-hotel">
                       Add Hotel
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="admin/manage-user">
+                    <Link className="dropdown-item" to="admin/manage-hotel">
                       Manage Hotel
                     </Link>
                   </li>

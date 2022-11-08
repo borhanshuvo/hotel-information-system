@@ -1,0 +1,30 @@
+.login-style {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 20px;
+  margin: auto;
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 600px) {
+  .login-style {
+    width: 80%;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .login-style {
+    width: 80%;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .login-style {
+    width: 60%;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .login-style {
+    width: 30%;
+  }
+}

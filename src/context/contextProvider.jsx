@@ -6,14 +6,13 @@ const Context = createContext();
 const ContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [accessToken, setAccessToken] = useState();
+  const [number, setNumber] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("userInfo")));
     setAccessToken(JSON.parse(localStorage.getItem("token")));
   }, []);
-
-  console.log(user, accessToken);
 
   return (
     <Context.Provider
@@ -22,6 +21,8 @@ const ContextProvider = ({ children }) => {
         setUser,
         accessToken,
         setAccessToken,
+        number,
+        setNumber,
         navigate,
       }}
     >
