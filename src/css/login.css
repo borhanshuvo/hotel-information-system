@@ -4,37 +4,3 @@
   margin: auto;
   border-radius: 5px;
 }
-
-@media screen and (max-width: 600px) {
-  .login-style {
-    width: 80%;
-  }
-
-  .right-38 {
-    right: 20px;
-    bottom: -50px;
-  }
-
-  .left-38 {
-    top: -38px;
-    left: 5px;
-  }
-}
-
-@media only screen and (min-width: 600px) {
-  .login-style {
-    width: 80%;
-  }
-}
-
-@media only screen and (min-width: 768px) {
-  .login-style {
-    width: 60%;
-  }
-}
-
-@media only screen and (min-width: 992px) {
-  .login-style {
-    width: 30%;
-  }
-}

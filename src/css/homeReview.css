@@ -1,0 +1,19 @@
+.right-38 {
+  right: -48px;
+  bottom: 0;
+}
+
+.left-38 {
+  left: -38px;
+}
+
+@media (max-width: 576px) {
+  .right-38 {
+    right: 10px;
+    bottom: -45px;
+  }
+
+  .left-38 {
+    left: 0px;
+  }
+}

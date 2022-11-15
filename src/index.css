@@ -9,6 +9,8 @@
 
 @import "./css/login.css";
 @import "./css/dashboard.css";
+@import "./css/search.css";
+@import "./css/homeReview.css";
 @import "./css/footer.css";
 
 .font-oswald {
@@ -40,7 +42,7 @@
 }
 
 .card-hover-1:hover {
-  transform: translate(0, -18px);
+  transform: translate(0, -10px);
 }
 
 .boxShadow {
@@ -51,11 +53,30 @@
   border: 3px solid #fe9332 !important;
 }
 
-.right-38 {
-  right: -48px;
-  bottom: 0;
+.bg-base {
+  background-color: #ff9f26;
 }
 
-.left-38 {
-  left: -38px;
+.text-base {
+  color: #ff9f26;
+}
+
+.btn-base:hover {
+  border: 1px solid #ff9f26;
+  color: #ff9f26 !important;
+  background-color: #ffff;
+}
+
+.link-btn {
+  transition: all 0.5s ease-in-out;
+}
+
+.link-btn:hover {
+  border: 1px solid #ff9f26;
+  color: #ff9f26 !important;
+  background-color: #ffff;
+}
+
+.text-align-justify {
+  text-align: justify;
 }

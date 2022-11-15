@@ -25,7 +25,7 @@
 }
 
 .d-nav-container {
-  background-color: #fed700;
+  background-color: #ff9f26;
 }
 
 .d-nav-container-2 {
@@ -78,7 +78,7 @@
   font-size: 14px;
   background-color: #ffffff;
   border-radius: 0.5px;
-  padding: 0rem 0.5px;
+  padding: 0rem 0.3rem;
 }
 
 .instructor-textarea-control {
@@ -87,6 +87,7 @@
   font-size: 14px;
   background-color: #ffffff;
   border-radius: 0.5px;
+  padding: 0rem 0.3rem;
 }
 
 .btn-instructor {

@@ -5,7 +5,6 @@ import quoteIcon from "../images/icon.svg";
 const Review = () => {
   const [number, setNumber] = useState(0);
   const [currentReview, setCurrentReview] = useState(reviewData[number]);
-  console.log(currentReview);
 
   useEffect(() => {
     const interval = setInterval(() => {

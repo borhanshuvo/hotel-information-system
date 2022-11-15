@@ -1,6 +1,6 @@
 /* Footer Design Start */
 .social-icon:hover {
-  color: #f49807;
+  color: #ff9f26;
   transform: scale(1.2);
   transition: all 0.5s ease;
 }
@@ -14,7 +14,7 @@
 }
 
 .footer-text:hover {
-  color: #f49807;
+  color: #ff9f26;
 }
 
 /* Footer Design End */

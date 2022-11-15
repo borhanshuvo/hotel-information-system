@@ -2,6 +2,7 @@ import { FaUserEdit } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { Link, NavLink } from "react-router-dom";
 import { ContextState } from "../../context/contextProvider";
+import { BASE_URL } from "../../data/baseURL";
 
 const Navbar = () => {
   const { user, setUser, navigate } = ContextState();
@@ -18,8 +19,7 @@ const Navbar = () => {
           <div className="d-flex align-items-center d-block d-md-none nav-proflile-position">
             <p>
               <img
-                // src={user?.image}
-                src="https://imgs.search.brave.com/kZCNA3Oq4ZLojuVncmP84pENxYkgh_bPpVMRJzxqQQs/rs:fit:755:1080:1/g:ce/aHR0cHM6Ly9jZG4x/LnZlY3RvcnN0b2Nr/LmNvbS9pLzEwMDB4/MTAwMC83Ny8xMC9t/ZW4tZmFjZWxlc3Mt/cHJvZmlsZS12ZWN0/b3ItMTM1Njc3MTAu/anBn"
+                src={`${BASE_URL}${user?.profileImageURL}`}
                 alt=""
                 className="profile-img cursor-pointer"
               />
@@ -32,8 +32,7 @@ const Navbar = () => {
                 <div className="d-flex align-items-center mt-md-3">
                   <p>
                     <img
-                      // src={user?.image}
-                      src="https://imgs.search.brave.com/kZCNA3Oq4ZLojuVncmP84pENxYkgh_bPpVMRJzxqQQs/rs:fit:755:1080:1/g:ce/aHR0cHM6Ly9jZG4x/LnZlY3RvcnN0b2Nr/LmNvbS9pLzEwMDB4/MTAwMC83Ny8xMC9t/ZW4tZmFjZWxlc3Mt/cHJvZmlsZS12ZWN0/b3ItMTM1Njc3MTAu/anBn"
+                      src={`${BASE_URL}${user?.profileImageURL}`}
                       alt=""
                       className="profile-img cursor-pointer"
                     />
@@ -70,9 +69,7 @@ const Navbar = () => {
       <nav className="navbar navbar-expand-lg py-4 px-xl-5 d-nav-container-2">
         <div className="container">
           <div className="d-block d-md-none nav-proflile-position">
-            <p className="cursor-pointer text-gunmetal fs-16 ps-2">
-              Borhan Uddin
-            </p>
+            <p className="cursor-pointer fs-16 ps-2 fw-700">{user?.name}</p>
           </div>
           <button
             className="navbar-toggler"
@@ -96,44 +93,68 @@ const Navbar = () => {
                 </Link>
               </li>
 
-              <li className="nav-item dashboard mx-2">
-                <p className="nav-link cursor-pointer">User</p>
-                <ul className="dropdown-menu dashboard-menu">
-                  <li>
-                    <Link className="dropdown-item" to="admin/add-user">
-                      Add User
-                    </Link>
+              {user?.role === "admin" && (
+                <>
+                  <li className="nav-item dashboard mx-2">
+                    <p className="nav-link cursor-pointer">User</p>
+                    <ul className="dropdown-menu dashboard-menu">
+                      <li>
+                        <Link className="dropdown-item" to="admin/add-user">
+                          Add User
+                        </Link>
+                      </li>
+                      <li>
+                        <Link className="dropdown-item" to="admin/manage-user">
+                          Manage User
+                        </Link>
+                      </li>
+                    </ul>
                   </li>
-                  <li>
-                    <Link className="dropdown-item" to="admin/manage-user">
-                      Manage User
-                    </Link>
-                  </li>
-                </ul>
-              </li>
 
-              <li className="nav-item dashboard mx-2">
-                <p className="nav-link cursor-pointer">Hotel</p>
-                <ul className="dropdown-menu dashboard-menu">
-                  <li>
-                    <Link className="dropdown-item" to="admin/add-hotel">
-                      Add Hotel
-                    </Link>
+                  <li className="nav-item dashboard mx-2">
+                    <p className="nav-link cursor-pointer">Hotel</p>
+                    <ul className="dropdown-menu dashboard-menu">
+                      <li>
+                        <Link className="dropdown-item" to="admin/add-hotel">
+                          Add Hotel
+                        </Link>
+                      </li>
+                      <li>
+                        <Link className="dropdown-item" to="admin/manage-hotel">
+                          Manage Hotel
+                        </Link>
+                      </li>
+                    </ul>
                   </li>
-                  <li>
-                    <Link className="dropdown-item" to="admin/manage-hotel">
-                      Manage Hotel
-                    </Link>
+                </>
+              )}
+
+              {user?.role === "hotel" && (
+                <>
+                  <li className="nav-item dashboard mx-2">
+                    <p className="nav-link cursor-pointer">Room</p>
+                    <ul className="dropdown-menu dashboard-menu">
+                      <li>
+                        <Link className="dropdown-item" to="admin/add-room">
+                          Add Room
+                        </Link>
+                      </li>
+                      <li>
+                        <Link className="dropdown-item" to="admin/manage-room">
+                          Manage Room
+                        </Link>
+                      </li>
+                    </ul>
                   </li>
-                </ul>
-              </li>
+                </>
+              )}
 
               <li className="nav-item mx-2">
                 <NavLink
                   className={({ isActive }) =>
                     isActive ? "active-class nav-link" : "nav-link"
                   }
-                  to=""
+                  to="profile"
                 >
                   Profile
                 </NavLink>

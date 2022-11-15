@@ -6,6 +6,7 @@ import Header from "../components/header";
 import Hotel from "../components/hotel";
 import Navbar from "../components/navbar";
 import Review from "../components/review";
+import Search from "../components/search";
 
 const Home = () => {
   return (
@@ -13,8 +14,11 @@ const Home = () => {
       <div>
         <Navbar />
       </div>
-      <div>
+      <div className="position-relative">
         <Header />
+      </div>
+      <div className="search-container">
+        <Search />
       </div>
       <div>
         <Hotel />

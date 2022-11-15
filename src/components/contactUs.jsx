@@ -66,7 +66,10 @@ const ContactUs = () => {
               </div>
 
               <div className="">
-                <input type="submit" className="btn btn-primary px-5 py-2" />
+                <input
+                  type="submit"
+                  className="btn btn-base bg-base text-white px-5 py-2"
+                />
               </div>
             </form>
           </div>
