@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -11,40 +11,28 @@ const AddRoom = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { accessToken } = ContextState();
-  const [file, setFile] = useState(null);
-  const [allHotels, setAllHotels] = useState([]);
-
-  const option = allHotels?.map((hotel) => ({
-    value: hotel?._id,
-    label: hotel?.name,
-  }));
-
-  useEffect(() => {
-    fetch(`${BASE_URL}/hotel/get`)
-      .then((res) => res.json())
-      .then((result) => {
-        if (result.success) {
-          setAllHotels(result.hotels);
-        } else {
-          toast.error(result.message);
-        }
-      });
-  }, []);
+  const { accessToken, user } = ContextState();
+  const [roomImage, setRoomImage] = useState(null);
 
   const handleFileChange = (e) => {
     const newFile = e.target.files[0];
-    setFile(newFile);
+    setRoomImage(newFile);
   };
-
+  console.log(user);
   const addRoom = (data, e) => {
     const formData = new FormData();
+    formData.append("hotelId", user?._id);
+    formData.append("hotelEmail", user?.email);
     formData.append("name", data.name);
-    formData.append("email", data.email);
-    formData.append("phone", data.phone);
-    formData.append("address", data.address);
-    formData.append("hotelImage", file);
-    fetch(`${BASE_URL}/hotel/post`, {
+    formData.append("roomAmenities", data.roomAmenities);
+    formData.append("adult", data.adult);
+    formData.append("child", data.child);
+    formData.append("numberOfBed", data.numberOfBed);
+    formData.append("numberOfRoom", data.numberOfRoom);
+    formData.append("price", data.price);
+    formData.append("discount", data.discount);
+    formData.append("roomImageURL", roomImage);
+    fetch(`${BASE_URL}/room/add-room`, {
       method: "POST",
       headers: {
         authorization: `Bearer ${accessToken}`,
@@ -75,7 +63,7 @@ const AddRoom = () => {
             <div className="col-lg-4 p-5">
               <div className="fs-16 text-gunmetal">
                 <p className="fw-700">Basic Information</p>
-                <p>Room basic Information</p>
+                <p>Room Information</p>
               </div>
             </div>
             <div className="col-lg-8 instructor-form p-5">
@@ -94,59 +82,123 @@ const AddRoom = () => {
               </div>
 
               <div className="mb-3">
-                <label htmlFor="email" className="instructor-label">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  className="instructor-control form-control"
-                  id="email"
-                  autoCapitalize="off"
-                  autoComplete="off"
-                  {...register("email", { required: true })}
-                />
-                {errors.email && <span>This field is required</span>}
-              </div>
-
-              <div className="mb-3">
-                <label htmlFor="phone" className="instructor-label">
-                  Phone
-                </label>
-                <input
-                  type="text"
-                  className="instructor-control form-control"
-                  id="phone"
-                  autoCapitalize="off"
-                  autoComplete="off"
-                  {...register("phone", { required: true })}
-                />
-                {errors.phone && <span>This field is required</span>}
-              </div>
-
-              <div className="mb-3">
-                <label htmlFor="address" className="instructor-label">
-                  Address
+                <label htmlFor="roomAmenities" className="instructor-label">
+                  Room Amenities
                 </label>
                 <textarea
-                  name="address"
-                  id="address"
+                  name="roomAmenities"
+                  id="roomAmenities"
                   cols="30"
                   rows="10"
                   className="instructor-textarea-control form-control"
                   autoCapitalize="off"
                   autoComplete="off"
-                  {...register("address")}
+                  {...register("roomAmenities")}
                 ></textarea>
               </div>
 
+              <div className="mb-3">
+                <label htmlFor="adult" className="instructor-label">
+                  Adult
+                </label>
+                <input
+                  type="number"
+                  min={1}
+                  className="instructor-control form-control"
+                  id="adult"
+                  autoComplete="off"
+                  defaultValue={1}
+                  {...register("adult", { required: true })}
+                />
+                {errors.adult && <span>This field is required</span>}
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="child" className="instructor-label">
+                  Child
+                </label>
+                <input
+                  type="number"
+                  min={0}
+                  className="instructor-control form-control"
+                  id="child"
+                  autoComplete="off"
+                  defaultValue={0}
+                  {...register("child")}
+                />
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="numberOfRoom" className="instructor-label">
+                  Number of Room
+                </label>
+                <input
+                  type="number"
+                  min={0}
+                  className="instructor-control form-control"
+                  id="numberOfRoom"
+                  autoComplete="off"
+                  defaultValue={0}
+                  {...register("numberOfRoom", { required: true })}
+                />
+                {errors.numberOfRoom && <span>This field is required</span>}
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="numberOfBed" className="instructor-label">
+                  Number of Bed
+                </label>
+                <input
+                  type="number"
+                  min={0}
+                  className="instructor-control form-control"
+                  id="numberOfBed"
+                  autoComplete="off"
+                  defaultValue={0}
+                  {...register("numberOfBed", { required: true })}
+                />
+                {errors.numberOfBed && <span>This field is required</span>}
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="price" className="instructor-label">
+                  Price
+                </label>
+                <input
+                  type="number"
+                  min={0}
+                  className="instructor-control form-control"
+                  id="price"
+                  autoComplete="off"
+                  defaultValue={0}
+                  {...register("price", { required: true })}
+                />
+                {errors.price && <span>This field is required</span>}
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="discount" className="instructor-label">
+                  Discount
+                </label>
+                <input
+                  type="number"
+                  min={0}
+                  className="instructor-control form-control"
+                  id="discount"
+                  autoComplete="off"
+                  defaultValue={0}
+                  {...register("discount")}
+                />
+              </div>
+
               <div className="mb-5">
-                <label htmlFor="image" className="instructor-label">
-                  Image (W:640, H:427)
+                <label htmlFor="roomImageURL" className="instructor-label">
+                  Room Image
                 </label>
                 <input
                   type="file"
                   className="cursor-pointer border"
-                  id="image"
+                  id="roomImageURL"
                   accept="image/*"
                   onChange={handleFileChange}
                 />

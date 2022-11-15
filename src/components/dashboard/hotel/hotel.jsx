@@ -1,9 +1,22 @@
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { CgProfile } from "react-icons/cg";
+import { CgCheck, CgHome } from "react-icons/cg";
 import { ContextState } from "../../../context/contextProvider";
+import { BASE_URL } from "../../../data/baseURL";
 
 const Hotel = () => {
   const { accessToken, user } = ContextState();
+  const [allRooms, setAllRooms] = useState([]);
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/room/get-room`)
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.success) {
+          setAllRooms(result.rooms);
+        }
+      });
+  }, []);
 
   return (
     <div>
@@ -17,11 +30,11 @@ const Hotel = () => {
           <div className="card-shadow d-flex justify-content-between align-items-center fs-18 fw-700">
             <div>
               <p>Total Rooms</p>
-              <p>10</p>
+              <p>{allRooms?.length}</p>
             </div>
             <div>
               <p className="profile-card-icon">
-                <CgProfile size={25} className="text-primary" />
+                <CgHome size={30} className="text-base" />
               </p>
             </div>
           </div>
@@ -30,11 +43,11 @@ const Hotel = () => {
           <div className="card-shadow d-flex justify-content-between align-items-center fs-18 fw-700">
             <div>
               <p>Total Booking</p>
-              <p>10</p>
+              <p>0</p>
             </div>
             <div>
               <p className="profile-card-icon">
-                <CgProfile size={25} className="text-primary" />
+                <CgCheck size={30} className="text-base" />
               </p>
             </div>
           </div>

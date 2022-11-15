@@ -10,7 +10,9 @@ import Customer from "./components/dashboard/customer/customer";
 import Hotel from "./components/dashboard/hotel/hotel";
 import Profile from "./components/dashboard/hotel/profile";
 import ManageHotel from "./components/dashboard/manageHotel";
+import ManageRoom from "./components/dashboard/manageRoom";
 import ManageUser from "./components/dashboard/manageUser";
+import UserProfile from "./components/dashboard/userProfile";
 import { ContextState } from "./context/contextProvider";
 import AllHotels from "./pages/allHotels";
 import HotelById from "./pages/hotelById";
@@ -93,10 +95,11 @@ const App = () => {
           <Route path="admin/manage-user" element={<ManageUser />} />
           <Route path="admin/add-hotel" element={<AddHotel />} />
           <Route path="admin/manage-hotel" element={<ManageHotel />} />
-          <Route path="admin/add-room" element={<AddRoom />} />
+          <Route path="hotel/add-room" element={<AddRoom />} />
+          <Route path="hotel/manage-room" element={<ManageRoom />} />
           <Route
             path="profile"
-            element={user?.role === "hotel" && <Profile />}
+            element={user?.role === "hotel" ? <Profile /> : <UserProfile />}
           />
         </Route>
       </Routes>

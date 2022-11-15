@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <footer className="mt-5">
-      <div className="bg-dark">
+      <div className="bg-dark pb-4">
         <div className="pt-5">
           <div
             style={{ border: "0.01rem solid rgba(155, 155, 153, 0.24)" }}
@@ -144,7 +144,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="bg-warning">
+      <div className="bg-base">
         <div className="container py-3">
           <p className="text-center">
             Copy right @{new Date().getFullYear()}{" "}

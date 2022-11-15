@@ -9,7 +9,7 @@ import { BASE_URL } from "../data/baseURL";
 const HotelById = () => {
   const { id } = useParams();
   const [hotel, setHotel] = useState({});
-  const [dis, setDis] = useState(50);
+  const [rooms, setRooms] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const { number, loading, setLoading, navigate } = ContextState();
@@ -20,6 +20,7 @@ const HotelById = () => {
       .then((res) => res.json())
       .then((result) => {
         if (result.success) {
+          setRooms(result.room);
           setHotel(result.hotel);
           setLoading(false);
         }
@@ -53,28 +54,40 @@ const HotelById = () => {
               <div className="card-body">
                 <div>
                   <h5>Available Room</h5>
-                  {[0, 1, 2, 3].map((data, index) => (
+                  {rooms?.map((data, index) => (
                     <div
                       className="row border p-2 rounded mt-3 align-items-center"
                       key={index}
                     >
-                      <div className="col-md-3 mb-3">
+                      <div className="col-md-3 mb-3 position-relative">
                         <img
-                          src={`${BASE_URL}/${hotel?.thumbnailImageURL}`}
+                          src={`${BASE_URL}/${data?.roomImageURL}`}
                           className="img-fluid rounded"
                           alt=""
                         />
+                        {data?.discount > 0 && (
+                          <div className="position-absolute top-0 start-0">
+                            <p
+                              className="bg-base text-white py-1 px-2 rounded fs-600"
+                              style={{ fontSize: "12px" }}
+                            >
+                              {data?.discount}% Discount
+                            </p>
+                          </div>
+                        )}
                       </div>
                       <div className="col-md-3 mb-3">
                         <p className="text-capitalize mb-1 fs-20">
-                          Executive Suite
+                          {data?.name}
                         </p>
-                        <p className="mb-1">Adult: 5</p>
-                        <p className="mb-1">Child: 1</p>
+                        <p className="mb-1">Adult: {data?.adult}</p>
+                        <p className="mb-1">Child: {data?.child}</p>
                       </div>
                       <div className="col-md-2 mb-3">
                         <p className="mb-0">
-                          <span className="fs-20 text-base fw-600">৳5000</span>{" "}
+                          <span className="fs-20 text-base fw-600">
+                            ৳{data?.price}
+                          </span>{" "}
                           <small>Per Night</small>
                         </p>
                         <p className="bg-base text-white py-2 px-3 d-inline-block mt-3 rounded">
@@ -112,6 +125,11 @@ const HotelById = () => {
                       </div>
                     </div>
                   ))}
+                  {rooms?.length <= 0 && (
+                    <div className="text-center">
+                      <p>Sorry!!! No room available.</p>
+                    </div>
+                  )}
                 </div>
                 <div>
                   <h5 className="my-4">Hotel Overview</h5>
@@ -125,9 +143,9 @@ const HotelById = () => {
                       width="100%"
                       height="450"
                       style={{ border: 0 }}
-                      allowfullscreen=""
+                      allowFullScreen=""
                       loading="lazy"
-                      referrerpolicy="no-referrer-when-downgrade"
+                      referrerPolicy="no-referrer-when-downgrade"
                       title="Hotel"
                     ></iframe>
                   </p>

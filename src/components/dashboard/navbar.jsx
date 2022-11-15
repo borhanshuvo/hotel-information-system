@@ -135,12 +135,12 @@ const Navbar = () => {
                     <p className="nav-link cursor-pointer">Room</p>
                     <ul className="dropdown-menu dashboard-menu">
                       <li>
-                        <Link className="dropdown-item" to="admin/add-room">
+                        <Link className="dropdown-item" to="hotel/add-room">
                           Add Room
                         </Link>
                       </li>
                       <li>
-                        <Link className="dropdown-item" to="admin/manage-room">
+                        <Link className="dropdown-item" to="hotel/manage-room">
                           Manage Room
                         </Link>
                       </li>
