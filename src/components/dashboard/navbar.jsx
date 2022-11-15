@@ -111,7 +111,18 @@ const Navbar = () => {
                     </ul>
                   </li>
 
-                  <li className="nav-item dashboard mx-2">
+                  <li className="nav-item mx-2">
+                    <NavLink
+                      className={({ isActive }) =>
+                        isActive ? "active-class nav-link" : "nav-link"
+                      }
+                      to=""
+                    >
+                      Room
+                    </NavLink>
+                  </li>
+
+                  {/* <li className="nav-item dashboard mx-2">
                     <p className="nav-link cursor-pointer">Hotel</p>
                     <ul className="dropdown-menu dashboard-menu">
                       <li>
@@ -125,7 +136,7 @@ const Navbar = () => {
                         </Link>
                       </li>
                     </ul>
-                  </li>
+                  </li> */}
                 </>
               )}
 
