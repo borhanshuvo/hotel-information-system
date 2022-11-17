@@ -5,6 +5,7 @@ import Footer from "../components/footer";
 import Navbar from "../components/navbar";
 import { ContextState } from "../context/contextProvider";
 import { BASE_URL } from "../data/baseURL";
+import { useScrollTop } from "../hook/useScrollTop";
 
 const HotelById = () => {
   const { id } = useParams();
@@ -26,6 +27,8 @@ const HotelById = () => {
         }
       });
   }, [id, setLoading]);
+
+  useScrollTop();
 
   return (
     <section>

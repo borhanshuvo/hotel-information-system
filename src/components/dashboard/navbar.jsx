@@ -9,7 +9,7 @@ const Navbar = () => {
 
   return (
     <div className="position-fixed w-100" style={{ zIndex: "2" }}>
-      <nav className="navbar navbar-expand-lg py-2 px-xl-5 d-nav-container">
+      <nav className="navbar navbar-expand-lg py-1 px-xl-5 d-nav-container">
         <div className="container">
           <div>
             <Link className="navbar-brand fw-600" to="/">
@@ -66,7 +66,7 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-      <nav className="navbar navbar-expand-lg py-4 px-xl-5 d-nav-container-2">
+      <nav className="navbar navbar-expand-lg pt-3 px-xl-5 d-nav-container-2">
         <div className="container">
           <div className="d-block d-md-none nav-proflile-position">
             <p className="cursor-pointer fs-16 ps-2 fw-700">{user?.name}</p>
@@ -116,7 +116,7 @@ const Navbar = () => {
                       className={({ isActive }) =>
                         isActive ? "active-class nav-link" : "nav-link"
                       }
-                      to=""
+                      to="admin/all-room"
                     >
                       Room
                     </NavLink>

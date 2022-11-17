@@ -7,8 +7,10 @@ import Hotel from "../components/hotel";
 import Navbar from "../components/navbar";
 import Review from "../components/review";
 import Search from "../components/search";
+import { useScrollTop } from "../hook/useScrollTop";
 
 const Home = () => {
+  useScrollTop();
   return (
     <>
       <div>

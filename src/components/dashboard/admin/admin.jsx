@@ -21,7 +21,7 @@ const Admin = () => {
         }
       });
 
-    fetch(`${BASE_URL}/user/get`, {
+    fetch(`${BASE_URL}/user/get-user`, {
       headers: {
         authorization: `Bearer ${accessToken}`,
       },

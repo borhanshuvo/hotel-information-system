@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { ContextState } from "../../context/contextProvider";
 import { BASE_URL } from "../../data/baseURL";
@@ -12,9 +13,19 @@ const UserProfile = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const { accessToken, user, setUser, number, setNumber } = ContextState();
+  const {
+    accessToken,
+    user,
+    setUser,
+    number,
+    setNumber,
+    loading,
+    setLoading,
+    navigate,
+  } = ContextState();
   const [allInfo, setAllInfo] = useState({});
   const [profileImage, setProfileImage] = useState(null);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     fetch(`${BASE_URL}/user/get-user/${user?._id}`, {
@@ -62,6 +73,40 @@ const UserProfile = () => {
           localStorage.setItem("userInfo", JSON.stringify(result?.user));
           setNumber(number + 1);
           toast.success("Profile update successfully!!!");
+        }
+      });
+  };
+
+  const updatePassword = (data, e) => {
+    setLoading(true);
+    fetch(`${BASE_URL}/user/password-change`, {
+      mode: "cors",
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({
+        email: user?.email,
+        oldPassword: data.oldPassword,
+        newPassword: data.password,
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.success) {
+          toast.success(`${result.message} & Please login again`);
+          e.target.reset();
+          setTimeout(() => {
+            localStorage.removeItem("userInfo");
+            localStorage.removeItem("token");
+            setUser({});
+            navigate("/login");
+          }, 2000);
+          setLoading(false);
+        } else {
+          toast.error(result.message);
+          setLoading(false);
         }
       });
   };
@@ -126,7 +171,7 @@ const UserProfile = () => {
                   autoCapitalize="off"
                   autoComplete="off"
                   defaultValue={allInfo?.user?.phoneNumber}
-                  {...register("phoneNumber", { required: true })}
+                  {...register("phoneNumber")}
                 />
                 {errors.phoneNumber && <span>This field is required</span>}
               </div>
@@ -162,6 +207,71 @@ const UserProfile = () => {
           </div>
         </div>
 
+        <div className="d-md-flex justify-content-end">
+          <input
+            type="submit"
+            className="btn btn-base bg-base text-white px-5 py-2"
+          />
+        </div>
+      </form>
+      <form onSubmit={handleSubmit(updatePassword)}>
+        <div className="instructor-form-container">
+          <div className="row">
+            <div className="col-lg-4 p-5">
+              <div className="fs-16 text-gunmetal">
+                <p className="fw-700">Update Your Password</p>
+                <p>Change your password.</p>
+              </div>
+            </div>
+            <div className="col-lg-8 instructor-form p-5">
+              <div className="">
+                <div className="mb-3">
+                  <label htmlFor="oldPassword" className="instructor-label">
+                    Old Password
+                  </label>
+                  <div className="input-group">
+                    <input
+                      type={show ? "text" : "password"}
+                      className="instructor-control form-control"
+                      id="oldPassword"
+                      autoCapitalize="off"
+                      autoComplete="off"
+                      {...register("oldPassword")}
+                    />
+                    <div
+                      className="input-group-text"
+                      onClick={() => setShow(!show)}
+                    >
+                      {!show ? <AiFillEyeInvisible /> : <AiFillEye />}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mb-3">
+                  <label htmlFor="password" className="instructor-label">
+                    New Password
+                  </label>
+                  <div className="input-group">
+                    <input
+                      type={show ? "text" : "password"}
+                      className="instructor-control form-control"
+                      id="password"
+                      autoCapitalize="off"
+                      autoComplete="off"
+                      {...register("password")}
+                    />
+                    <div
+                      className="input-group-text"
+                      onClick={() => setShow(!show)}
+                    >
+                      {!show ? <AiFillEyeInvisible /> : <AiFillEye />}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="d-md-flex justify-content-end">
           <input
             type="submit"

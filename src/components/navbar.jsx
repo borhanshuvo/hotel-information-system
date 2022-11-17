@@ -10,6 +10,7 @@ const Navbar = () => {
       <div className="container">
         <Link className="navbar-brand fs-20 fw-700" to="/">
           Hotel Information System
+          <img src="" alt="" />
         </Link>
         <button
           className="navbar-toggler"

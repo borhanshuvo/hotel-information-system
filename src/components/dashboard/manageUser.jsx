@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { FaEdit } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
 import { ContextState } from "../../context/contextProvider";
 import { BASE_URL } from "../../data/baseURL";
 
 const ManageUser = () => {
   const [allUsers, setAllUsers] = useState([]);
-  const { accessToken } = ContextState();
+  const { accessToken, setNumber, number, loading, setLoading } =
+    ContextState();
 
   useEffect(() => {
-    fetch(`${BASE_URL}/user/get`, {
+    setLoading(true);
+    fetch(`${BASE_URL}/user/get-user`, {
       headers: {
         authorization: `Bearer ${accessToken}`,
       },
@@ -20,11 +20,37 @@ const ManageUser = () => {
       .then((result) => {
         if (result.success) {
           setAllUsers(result.users);
+          setLoading(false);
         } else {
           toast.error(result.message);
+          setLoading(false);
         }
       });
-  }, [accessToken]);
+  }, [accessToken, setLoading, number]);
+
+  const updateStatus = (val, id) => {
+    setNumber(false);
+    fetch(`${BASE_URL}/user/update-user-status/${id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({
+        status: val,
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.success) {
+          toast.success(result.message);
+          setNumber((prevState) => prevState + 1);
+          setLoading(false);
+        } else {
+          setLoading(false);
+        }
+      });
+  };
 
   return (
     <div className="">
@@ -39,7 +65,8 @@ const ManageUser = () => {
             <th scope="col">#Sl</th>
             <th scope="col">Name</th>
             <th scope="col">Email</th>
-            <th scope="col">Action</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Status</th>
           </tr>
         </thead>
         <tbody>
@@ -48,12 +75,34 @@ const ManageUser = () => {
               <th className="fs-600">{index + 1}</th>
               <td>{user?.name}</td>
               <td>{user?.email}</td>
+              <td>{user?.phoneNumber}</td>
               <td>
-                <FaEdit className="text-primary cursor-pointer" /> |{" "}
-                <MdDelete className="text-danger cursor-pointer" />
+                <input
+                  type="checkbox"
+                  defaultChecked={user?.status}
+                  onChange={() => {
+                    updateStatus(!user?.status, user?._id);
+                  }}
+                />{" "}
+                <span
+                  className={`badge ${
+                    user?.status ? "bg-success" : "bg-danger"
+                  }`}
+                >
+                  {user?.status ? "Active" : "In-active"}
+                </span>
               </td>
             </tr>
           ))}
+          {loading && (
+            <tr>
+              <td colSpan={5}>
+                <div className="spinner-border text-primary" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>

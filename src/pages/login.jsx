@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Footer from "../components/footer";
 import Navbar from "../components/navbar";
 import { ContextState } from "../context/contextProvider";
 import { BASE_URL } from "../data/baseURL";
+import { useScrollTop } from "../hook/useScrollTop";
 
 const Login = () => {
   const [newUser, setNewUser] = useState(false);
@@ -39,6 +42,7 @@ const Login = () => {
           e.target.reset();
           navigate("/dashboard");
         } else {
+          setLoading(false);
           toast.error(result.message);
         }
       });
@@ -54,7 +58,7 @@ const Login = () => {
       body: JSON.stringify({
         name: data.name,
         email: data.email,
-        password: data.password,
+        // password: data.password,
         role: data.role,
       }),
     })
@@ -62,16 +66,22 @@ const Login = () => {
       .then((result) => {
         if (result.success) {
           setLoading(false);
-          toast.success("Account create successfully!!!");
+          toast.success(result.message);
           e.target.reset();
         } else {
+          setLoading(false);
           toast.error(result.message);
         }
       });
   };
 
+  useScrollTop();
+
   return (
     <>
+      <Helmet>
+        <title>Login</title>
+      </Helmet>
       <Navbar />
       <div className="container pt-5 mt-5">
         <div className="row mt-5">
@@ -121,7 +131,7 @@ const Login = () => {
                   <div>
                     <input
                       type="submit"
-                      className="btn btn-primary form-control"
+                      className="btn btn-base bg-base text-white form-control"
                       value="Sign in"
                     />
                   </div>
@@ -173,7 +183,7 @@ const Login = () => {
                     <span className="text-danger">This field is required</span>
                   )}
 
-                  <div className="mb-3">
+                  {/* <div className="mb-3">
                     <label className="form-label">Password</label>
                     <input
                       type="password"
@@ -199,12 +209,12 @@ const Login = () => {
                   </div>
                   {errors.cPassword && (
                     <span className="text-danger">This field is required</span>
-                  )}
+                  )} */}
 
                   <div>
                     <input
                       type="submit"
-                      className="btn btn-primary form-control"
+                      className="btn btn-base bg-base text-white form-control"
                       value="Sign up"
                     />
                   </div>
@@ -224,6 +234,9 @@ const Login = () => {
                 >
                   {newUser ? "Login" : "Create a new Account"}
                 </button>
+              </p>
+              <p className="text-center">
+                <Link to="/reset-password">Forget Password</Link>
               </p>
             </div>
           </div>

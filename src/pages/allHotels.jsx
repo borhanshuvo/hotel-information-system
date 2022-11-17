@@ -5,6 +5,7 @@ import Footer from "../components/footer";
 import Navbar from "../components/navbar";
 import { ContextState } from "../context/contextProvider";
 import { BASE_URL } from "../data/baseURL";
+import { useScrollTop } from "../hook/useScrollTop";
 
 const AllHotels = () => {
   const [allHotels, setAllHotels] = useState([]);
@@ -25,6 +26,8 @@ const AllHotels = () => {
         }
       });
   }, [number, setLoading]);
+
+  useScrollTop();
 
   return (
     <section>
