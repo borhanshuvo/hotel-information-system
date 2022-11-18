@@ -7,11 +7,15 @@ import SingleRoom from "./singleRoom";
 
 const ManageRoom = () => {
   const [allRooms, setAllRooms] = useState([]);
-  const { accessToken, number, loading, setLoading } = ContextState();
+  const { accessToken, number, loading, setLoading, user } = ContextState();
 
   useEffect(() => {
     setLoading(true);
-    fetch(`${BASE_URL}/room/get-room`)
+    fetch(`${BASE_URL}/room/get-room/${user?.email}`, {
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+      },
+    })
       .then((res) => res.json())
       .then((result) => {
         if (result.success) {
@@ -21,7 +25,7 @@ const ManageRoom = () => {
           toast.error(result.message);
         }
       });
-  }, [number, setLoading]);
+  }, [number, setLoading, user.email, accessToken]);
 
   return (
     <div>
@@ -38,8 +42,9 @@ const ManageRoom = () => {
             <th scope="col">Adult</th>
             <th scope="col">Child</th>
             <th scope="col">Number of Room</th>
+            <th scope="col">Room Price</th>
             <th scope="col">Number of Bed</th>
-            <th scope="col">Price</th>
+            <th scope="col">Bed Price</th>
             <th scope="col">Discount</th>
             <th scope="col">Available</th>
             <th scope="col">Action</th>
@@ -51,7 +56,7 @@ const ManageRoom = () => {
           ))}
           {loading && (
             <tr>
-              <td colSpan={10}>
+              <td colSpan={11}>
                 {" "}
                 <div className="spinner-border text-primary" role="status">
                   <span className="visually-hidden">Loading...</span>
@@ -61,7 +66,7 @@ const ManageRoom = () => {
           )}
           {allRooms?.length <= 0 && (
             <tr>
-              <td colSpan={10}>Sorry!!! No room.</td>
+              <td colSpan={11}>Sorry!!! No room.</td>
             </tr>
           )}
         </tbody>

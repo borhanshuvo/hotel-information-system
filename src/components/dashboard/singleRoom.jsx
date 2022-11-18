@@ -25,6 +25,7 @@ const SingleRoom = ({ room, index }) => {
     formData.append("adult", data.adult);
     formData.append("child", data.child);
     formData.append("price", data.price);
+    formData.append("bedPrice", data.bedPrice);
     formData.append("discount", data.discount);
     formData.append("numberOfBed", data.numberOfBed);
     formData.append("numberOfRoom", data.numberOfRoom);
@@ -76,8 +77,9 @@ const SingleRoom = ({ room, index }) => {
         <td>{room?.adult}</td>
         <td>{room?.child}</td>
         <td>{room?.numberOfRoom}</td>
-        <td>{room?.numberOfBed}</td>
         <td>{room?.price}</td>
+        <td>{room?.numberOfBed}</td>
+        <td>{room?.bedPrice}</td>
         <td>{room?.discount}</td>
         <td>
           <input
@@ -202,6 +204,22 @@ const SingleRoom = ({ room, index }) => {
                 </div>
 
                 <div className="mb-3">
+                  <p htmlFor="price" className="form-label text-start">
+                    Room Price
+                  </p>
+                  <input
+                    type="number"
+                    min={0}
+                    className="form-control"
+                    defaultValue={room?.price}
+                    id="price"
+                    autoComplete="off"
+                    {...register("price", { required: true })}
+                  />
+                  {errors.price && <span>This field is required</span>}
+                </div>
+
+                <div className="mb-3">
                   <p htmlFor="numberOfBed" className="form-label text-start">
                     Number Of bed
                   </p>
@@ -218,19 +236,19 @@ const SingleRoom = ({ room, index }) => {
                 </div>
 
                 <div className="mb-3">
-                  <p htmlFor="price" className="form-label text-start">
-                    Price
+                  <p htmlFor="bedPrice" className="form-label text-start">
+                    Bed Price
                   </p>
                   <input
                     type="number"
                     min={0}
                     className="form-control"
-                    defaultValue={room?.price}
-                    id="price"
+                    defaultValue={room?.bedPrice}
+                    id="bedPrice"
                     autoComplete="off"
-                    {...register("price", { required: true })}
+                    {...register("bedPrice", { required: true })}
                   />
-                  {errors.price && <span>This field is required</span>}
+                  {errors.bedPrice && <span>This field is required</span>}
                 </div>
 
                 <div className="mb-3">

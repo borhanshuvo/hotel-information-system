@@ -9,14 +9,18 @@ const Hotel = () => {
   const [allRooms, setAllRooms] = useState([]);
 
   useEffect(() => {
-    fetch(`${BASE_URL}/room/get-room`)
+    fetch(`${BASE_URL}/room/get-room/${user?.email}`, {
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+      },
+    })
       .then((res) => res.json())
       .then((result) => {
         if (result.success) {
           setAllRooms(result.rooms);
         }
       });
-  }, []);
+  }, [accessToken, user?.email]);
 
   return (
     <div>

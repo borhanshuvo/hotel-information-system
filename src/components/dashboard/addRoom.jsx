@@ -18,7 +18,7 @@ const AddRoom = () => {
     const newFile = e.target.files[0];
     setRoomImage(newFile);
   };
-  console.log(user);
+
   const addRoom = (data, e) => {
     const formData = new FormData();
     formData.append("hotelId", user?._id);

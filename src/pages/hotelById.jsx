@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 import { useParams } from "react-router-dom";
 import Footer from "../components/footer";
 import Navbar from "../components/navbar";
+import Room from "../components/room";
 import { ContextState } from "../context/contextProvider";
 import { BASE_URL } from "../data/baseURL";
 import { useScrollTop } from "../hook/useScrollTop";
@@ -13,7 +14,7 @@ const HotelById = () => {
   const [rooms, setRooms] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const { number, loading, setLoading, navigate } = ContextState();
+  const { setLoading } = ContextState();
 
   useEffect(() => {
     setLoading(true);
@@ -23,6 +24,8 @@ const HotelById = () => {
         if (result.success) {
           setRooms(result.room);
           setHotel(result.hotel);
+          setLoading(false);
+        } else {
           setLoading(false);
         }
       });
@@ -58,75 +61,7 @@ const HotelById = () => {
                 <div>
                   <h5>Available Room</h5>
                   {rooms?.map((data, index) => (
-                    <div
-                      className="row border p-2 rounded mt-3 align-items-center"
-                      key={index}
-                    >
-                      <div className="col-md-3 mb-3 position-relative">
-                        <img
-                          src={`${BASE_URL}/${data?.roomImageURL}`}
-                          className="img-fluid rounded"
-                          alt=""
-                        />
-                        {data?.discount > 0 && (
-                          <div className="position-absolute top-0 start-0">
-                            <p
-                              className="bg-base text-white py-1 px-2 rounded fs-600"
-                              style={{ fontSize: "12px" }}
-                            >
-                              {data?.discount}% Discount
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                      <div className="col-md-3 mb-3">
-                        <p className="text-capitalize mb-1 fs-20">
-                          {data?.name}
-                        </p>
-                        <p className="mb-1">Adult: {data?.adult}</p>
-                        <p className="mb-1">Child: {data?.child}</p>
-                      </div>
-                      <div className="col-md-2 mb-3">
-                        <p className="mb-0">
-                          <span className="fs-20 text-base fw-600">
-                            ৳{data?.price}
-                          </span>{" "}
-                          <small>Per Night</small>
-                        </p>
-                        <p className="bg-base text-white py-2 px-3 d-inline-block mt-3 rounded">
-                          More Details
-                        </p>
-                      </div>
-                      <div className="col-md-4">
-                        <p className="d-flex">
-                          No Room:{" "}
-                          <select className="form-select">
-                            <option selected>Select Room</option>
-                            <option value={1}>1</option>
-                            <option value={2}>2</option>
-                            <option value={3}>3</option>
-                            <option value={4}>4</option>
-                            <option value={5}>5</option>
-                          </select>
-                        </p>
-                        <p className="d-flex">
-                          Total Bed:
-                          <select className="form-select">
-                            <option selected>Select If Needed</option>
-                            <option value={500}>1 - ৳500</option>
-                            <option value={900}>2 - ৳900</option>
-                            <option value={1200}>3 - ৳1200</option>
-                          </select>
-                        </p>
-                        <p>
-                          <input
-                            type="submit"
-                            value="Book Now"
-                            className="btn btn-base bg-base text-white px-5 w-100"
-                          />
-                        </p>
-                      </div>
-                    </div>
+                    <Room data={data} index={index} key={index} hotel={hotel} />
                   ))}
                   {rooms?.length <= 0 && (
                     <div className="text-center">
