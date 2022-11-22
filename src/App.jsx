@@ -1,4 +1,5 @@
 import React, { lazy, Suspense } from "react";
+import "react-datepicker/dist/react-datepicker.css";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

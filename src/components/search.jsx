@@ -3,10 +3,7 @@ import DatePicker from "react-datepicker";
 import ReactSelect from "react-select";
 import { toast } from "react-toastify";
 import { ContextState } from "../context/contextProvider";
-
 import { BASE_URL } from "../data/baseURL";
-
-import "react-datepicker/dist/react-datepicker.css";
 
 const Search = () => {
   const [isSearchable, setIsSearchable] = useState(true);
