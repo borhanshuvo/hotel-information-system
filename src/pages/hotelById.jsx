@@ -60,8 +60,8 @@ const HotelById = () => {
               <div className="card-body">
                 <div>
                   <h5>Available Room</h5>
-                  {rooms?.map((data, index) => (
-                    <Room data={data} index={index} key={index} hotel={hotel} />
+                  {rooms?.map((room, index) => (
+                    <Room room={room} index={index} key={index} hotel={hotel} />
                   ))}
                   {rooms?.length <= 0 && (
                     <div className="text-center">

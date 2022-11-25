@@ -5,8 +5,8 @@ import { toast } from "react-toastify";
 import { ContextState } from "../context/contextProvider";
 import { BASE_URL } from "../data/baseURL";
 
-const Room = ({ hotel, data, index }) => {
-  const { user, accessToken } = ContextState();
+const Room = ({ hotel, room, index }) => {
+  const { user, accessToken, navigate } = ContextState();
   const {
     register,
     handleSubmit,
@@ -31,30 +31,28 @@ const Room = ({ hotel, data, index }) => {
   };
 
   const addBooking = (data, e) => {
-    const hotelDiscount = hotel?.discount / 100;
-    const roomDiscount = data.discount / 100;
-    const numberOfRoom = data.numberOfRoom;
-    const numberOfBed = data.numberOfBed;
-    const bedPrice = data.bedPrice;
-    const price = data.price;
-    const date = numberDates(startDate, endDate);
+    const hotelDiscount = parseInt(hotel?.discount);
+    const roomDiscount = parseInt(room?.discount);
+    const numberOfBed = parseInt(data.numberOfBed);
+    const bedPrice = parseInt(room?.bedPrice);
+    const price = parseInt(room?.price);
+    const date = parseInt(numberDates(startDate, endDate));
 
     let totalPrice;
     if (hotelDiscount > 0) {
-      const total = (numberOfRoom * price + numberOfBed * bedPrice) * date;
+      const total = (price + numberOfBed * bedPrice) * date;
       totalPrice = total - total * (hotelDiscount / 100);
     } else if (roomDiscount > 0) {
-      const total = (numberOfRoom * price + numberOfBed * bedPrice) * date;
+      const total = (price + numberOfBed * bedPrice) * date;
       totalPrice = total - total * (roomDiscount / 100);
     } else {
-      totalPrice = (numberOfRoom * price + numberOfBed * bedPrice) * date;
+      totalPrice = (price + numberOfBed * bedPrice) * date;
     }
 
     const bookingInfo = {
       customerName: user?.name,
       customerEmail: user?.email,
       customerPhoneNumber: user?.phoneNumber,
-      numberOfRoom: data.numberOfRoom,
       roomPrice: data.price,
       numberOfBed: data.numberOfBed,
       bedPrice: data.bedPrice,
@@ -69,11 +67,11 @@ const Room = ({ hotel, data, index }) => {
       discount:
         hotelDiscount > 0 ? hotelDiscount : roomDiscount > 0 ? roomDiscount : 0,
     };
-    alert(JSON.stringify(bookingInfo));
-    fetch(`${BASE_URL}/add-booking`, {
+
+    fetch(`${BASE_URL}/booking/add-booking`, {
+      mode: "cors",
       method: "POST",
       headers: {
-        authorization: `Bearer ${accessToken}`,
         "content-type": "application/json",
       },
       body: JSON.stringify(bookingInfo),
@@ -81,7 +79,7 @@ const Room = ({ hotel, data, index }) => {
       .then((res) => res.json())
       .then((result) => {
         if (result.success) {
-          console.log(result);
+          window.location.replace(result.url);
         }
       });
   };
@@ -89,6 +87,9 @@ const Room = ({ hotel, data, index }) => {
   const handleCheckLogin = () => {
     if (!user?.email) {
       toast.error("Please Login First");
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
     }
   };
   return (
@@ -100,29 +101,29 @@ const Room = ({ hotel, data, index }) => {
       >
         <div className="col-lg-3 mb-3 position-relative">
           <img
-            src={`${BASE_URL}/${data?.roomImageURL}`}
+            src={`${BASE_URL}/${room?.roomImageURL}`}
             className="img-fluid rounded"
             alt=""
           />
-          {data?.discount > 0 && (
+          {room?.discount > 0 && (
             <div className="position-absolute top-0 start-0">
               <p
                 className="bg-base text-white py-1 px-2 rounded fs-600"
                 style={{ fontSize: "12px" }}
               >
-                {data?.discount}% Discount
+                {room?.discount}% Discount
               </p>
             </div>
           )}
         </div>
         <div className="col-lg-3 mb-3">
-          <p className="text-capitalize mb-1 fs-20">{data?.name}</p>
-          <p className="mb-1">Adult: {data?.adult}</p>
-          <p className="mb-1">Child: {data?.child}</p>
+          <p className="text-capitalize mb-1 fs-20">{room?.name}</p>
+          <p className="mb-1">Adult: {room?.adult}</p>
+          <p className="mb-1">Child: {room?.child}</p>
         </div>
         <div className="col-lg-3 mb-3">
           <p className="mb-0">
-            <span className="fs-20 text-base fw-600">৳{data?.price}</span>{" "}
+            <span className="fs-20 text-base fw-600">৳{room?.price}</span>{" "}
             <small>Per Night</small>
           </p>
           <p
@@ -135,16 +136,16 @@ const Room = ({ hotel, data, index }) => {
             More Details
           </p>
         </div>
-        <div className="col-lg-3">
-          <p className="d-flex mb-1">No Room: {data?.numberOfRoom}</p>
-          <p className="d-flex">Total Bed: {data?.numberOfBed}</p>
+        <div className="col-lg-3 mb-3">
+          {/* <p className="d-flex mb-1">No Room: {data?.numberOfRoom}</p> */}
+          <p className="d-flex">Extra Bed: {room?.numberOfBed}</p>
           <p>
             <input
               type="submit"
               value="Book Now"
               data-bs-toggle={user?.email ? "modal" : ""}
               data-bs-target={`#bookingConfirm${index}`}
-              className="btn btn-base bg-base text-white px-5 w-100"
+              className="btn btn-base bg-base text-white px-4"
               onClick={handleCheckLogin}
             />
           </p>
@@ -157,7 +158,7 @@ const Room = ({ hotel, data, index }) => {
             data-bs-parent={`#accordionExample${index + 1}`}
           >
             <div className="border-top py-3 text-align-justify">
-              {data?.roomAmenities}
+              {room?.roomAmenities}
             </div>
           </div>
         </div>
@@ -173,7 +174,7 @@ const Room = ({ hotel, data, index }) => {
             <div className="modal-content">
               <div className="modal-header">
                 <h1 className="modal-title fs-5" id="exampleModalLabel">
-                  {data?.name}
+                  {room?.name}
                 </h1>
                 <button
                   type="button"
@@ -186,43 +187,7 @@ const Room = ({ hotel, data, index }) => {
                 <form onSubmit={handleSubmit(addBooking)}>
                   <div className="mb-3">
                     <p htmlFor="name" className="form-label text-start">
-                      Name
-                    </p>
-                    <input
-                      type="text"
-                      className="form-control"
-                      defaultValue={data?.name}
-                      id="name"
-                      autoComplete="off"
-                      {...register("name", { required: true })}
-                    />
-                    {errors.name && <span>This field is required</span>}
-                  </div>
-
-                  <div className="mb-3">
-                    <p htmlFor="name" className="form-label text-start">
-                      Number Of Room (৳ {data?.price})
-                    </p>
-                    <select
-                      className="form-select"
-                      {...register("numberOfRoom", {
-                        required: true,
-                      })}
-                    >
-                      {[...Array(data?.numberOfRoom)].map((data, index) => (
-                        <option
-                          defaultValue={index + 1}
-                          selected={index === 0 ? true : false}
-                        >
-                          {index + 1}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="mb-3">
-                    <p htmlFor="name" className="form-label text-start">
-                      Number Of Extra Bed (৳ {data?.bedPrice})
+                      Number Of Extra Bed (৳ {room?.bedPrice})
                     </p>
                     <select
                       className="form-select"
@@ -233,7 +198,7 @@ const Room = ({ hotel, data, index }) => {
                       <option value={0} selected>
                         Please select if you need extra bed
                       </option>
-                      {[...Array(data?.numberOfBed)].map((data, index) => (
+                      {[...Array(room?.numberOfBed)].map((data, index) => (
                         <option defaultValue={index + 1}>{index + 1}</option>
                       ))}
                     </select>
@@ -249,7 +214,6 @@ const Room = ({ hotel, data, index }) => {
                       onChange={(date) => setStartDate(date)}
                       className="form-control shadow-none"
                     />
-                    {/* <input type="date" className="form-control shadow-none" /> */}
                   </div>
 
                   <div className="mb-3">
@@ -262,32 +226,7 @@ const Room = ({ hotel, data, index }) => {
                       onChange={(date) => setEndDate(date)}
                       className="form-control shadow-none"
                     />
-                    {/* <input type="date" className="form-control shadow-none" /> */}
                   </div>
-
-                  <input
-                    type="hidden"
-                    defaultValue={data?._id}
-                    {...register("_id")}
-                  />
-
-                  <input
-                    type="hidden"
-                    defaultValue={data?.price}
-                    {...register("price")}
-                  />
-
-                  <input
-                    type="hidden"
-                    defaultValue={data?.bedPrice}
-                    {...register("bedPrice")}
-                  />
-
-                  <input
-                    type="hidden"
-                    defaultValue={data?.discount}
-                    {...register("discount")}
-                  />
 
                   <div className="text-end">
                     <input
