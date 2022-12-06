@@ -71,15 +71,21 @@ const Footer = () => {
                       <span className="text-american-yellow me-3">
                         <BsFillCaretRightFill />
                       </span>
-                      <Link to="/" className="text-decoration-none footer-text">
-                        Terms & Condation
+                      <Link
+                        to="/terms-and-condition"
+                        className="text-decoration-none footer-text"
+                      >
+                        Terms & Condition
                       </Link>
                     </p>
                     <p>
                       <span className="text-american-yellow me-3">
                         <BsFillCaretRightFill />
                       </span>
-                      <Link to="/" className="text-decoration-none footer-text">
+                      <Link
+                        to="/privacy-policy"
+                        className="text-decoration-none footer-text"
+                      >
                         Privacy Policy
                       </Link>
                     </p>

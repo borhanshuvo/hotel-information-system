@@ -21,7 +21,9 @@ import { ContextState } from "./context/contextProvider";
 import AllHotels from "./pages/allHotels";
 import ConfirmOrder from "./pages/confirmOrder";
 import HotelById from "./pages/hotelById";
+import PrivacyPolicy from "./pages/privacyPolicy";
 import ResetPassword from "./pages/resetPassword";
+import TermsConditions from "./pages/termsConditions";
 const Home = lazy(() => import("./pages/home"));
 const Login = lazy(() => import("./pages/login"));
 const Dashboard = lazy(() => import("./pages/dashboard"));
@@ -93,6 +95,24 @@ const App = () => {
           element={
             <Suspense fallback={""}>
               <ResetPassword />
+            </Suspense>
+          }
+        />
+
+        <Route
+          path="/terms-and-condition"
+          element={
+            <Suspense fallback={""}>
+              <TermsConditions />
+            </Suspense>
+          }
+        />
+
+        <Route
+          path="/privacy-policy"
+          element={
+            <Suspense fallback={""}>
+              <PrivacyPolicy />
             </Suspense>
           }
         />

@@ -86,6 +86,12 @@ const Navbar = () => {
           >
             <ul className="navbar-nav mb-2 mb-lg-0 fs-16 fw-700 font-open-sans">
               <li className="nav-item mx-2">
+                <Link className="nav-link" to="/">
+                  Home
+                </Link>
+              </li>
+
+              <li className="nav-item mx-2">
                 <Link className="nav-link" to="/dashboard">
                   Dashboard
                 </Link>
