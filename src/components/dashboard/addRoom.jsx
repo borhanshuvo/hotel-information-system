@@ -21,15 +21,15 @@ const AddRoom = () => {
 
   const addRoom = (data, e) => {
     const formData = new FormData();
-    formData.append("hotelId", user?._id);
+    formData.append("hotels", user?._id);
     formData.append("hotelEmail", user?.email);
     formData.append("name", data.name);
     formData.append("roomAmenities", data.roomAmenities);
     formData.append("adult", data.adult);
     formData.append("child", data.child);
-    formData.append("numberOfBed", data.numberOfBed);
-    formData.append("numberOfRoom", data.numberOfRoom);
     formData.append("price", data.price);
+    formData.append("numberOfBed", data.numberOfBed);
+    formData.append("bedPrice", data.bedPrice);
     formData.append("discount", data.discount);
     formData.append("roomImageURL", roomImage);
     fetch(`${BASE_URL}/room/add-room`, {
@@ -129,19 +129,19 @@ const AddRoom = () => {
               </div>
 
               <div className="mb-3">
-                <label htmlFor="numberOfRoom" className="instructor-label">
-                  Number of Room
+                <label htmlFor="price" className="instructor-label">
+                  Room Price
                 </label>
                 <input
                   type="number"
                   min={0}
                   className="instructor-control form-control"
-                  id="numberOfRoom"
+                  id="price"
                   autoComplete="off"
                   defaultValue={0}
-                  {...register("numberOfRoom", { required: true })}
+                  {...register("price", { required: true })}
                 />
-                {errors.numberOfRoom && <span>This field is required</span>}
+                {errors.price && <span>This field is required</span>}
               </div>
 
               <div className="mb-3">
@@ -161,17 +161,17 @@ const AddRoom = () => {
               </div>
 
               <div className="mb-3">
-                <label htmlFor="price" className="instructor-label">
-                  Price
+                <label htmlFor="bedPrice" className="instructor-label">
+                  Bed Price
                 </label>
                 <input
                   type="number"
                   min={0}
                   className="instructor-control form-control"
-                  id="price"
+                  id="bedPrice"
                   autoComplete="off"
                   defaultValue={0}
-                  {...register("price", { required: true })}
+                  {...register("bedPrice", { required: true })}
                 />
                 {errors.price && <span>This field is required</span>}
               </div>
@@ -182,6 +182,7 @@ const AddRoom = () => {
                 </label>
                 <input
                   type="number"
+                  max={100}
                   min={0}
                   className="instructor-control form-control"
                   id="discount"

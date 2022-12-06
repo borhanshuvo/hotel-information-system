@@ -1,10 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { reviewData } from "../data/reviewData";
+import { BASE_URL } from "../data/baseURL";
+import { reviewDummyData } from "../data/reviewData";
 import quoteIcon from "../images/icon.svg";
 
 const Review = () => {
   const [number, setNumber] = useState(0);
+  const [reviewData, setReviewData] = useState([]);
   const [currentReview, setCurrentReview] = useState(reviewData[number]);
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/review/get-review`)
+      .then((res) => res.json())
+      .then((result) => {
+        if (result?.success) {
+          setReviewData(result.reviews);
+        } else {
+          setReviewData(reviewDummyData);
+        }
+      });
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -17,7 +31,7 @@ const Review = () => {
       }
     }, 3000);
     return () => clearInterval(interval);
-  }, [number]);
+  }, [number, reviewData]);
 
   const handleChange = (id) => {
     setCurrentReview(reviewData[id]);
@@ -32,31 +46,30 @@ const Review = () => {
           </div>
           <div className="p-2 p-md-5 text-center">
             <img
-              src={currentReview?.image}
+              src={`${BASE_URL}${currentReview?.users?.profileImageURL}`}
               alt="Loading..."
               width="70"
               height="70"
               className="rounded-circle borderColor"
             />
             <p className="fst-italic my-3 fs-14 lh-32">
-              “{currentReview?.text}”
+              “{currentReview?.review}”
             </p>
             <h3 className="fw-bold fs-18 font-family-roboto lh-26">
-              {currentReview?.name}
+              {currentReview?.users?.name}
             </h3>
-            <p className="fs-14 lh-26">{currentReview?.jobTitle}</p>
           </div>
           <div className="position-absolute right-38 d-flex flex-md-column">
-            {reviewData.map((data, index) => {
+            {reviewData?.slice(0, 5)?.map((data, index) => {
               return (
                 <div
                   key={data._id}
                   className="cursor-pointer mx-1"
                   onClick={() => handleChange(index)}
                 >
-                  {currentReview.id === data.id ? (
+                  {currentReview?._id === data?._id ? (
                     <img
-                      src={data?.image}
+                      src={`${BASE_URL}${data?.users?.profileImageURL}`}
                       alt="Loading..."
                       height="30"
                       width="30"
@@ -64,7 +77,7 @@ const Review = () => {
                     />
                   ) : (
                     <img
-                      src={data?.image}
+                      src={`${BASE_URL}${data?.users?.profileImageURL}`}
                       alt="Loading..."
                       height="24"
                       width="24"

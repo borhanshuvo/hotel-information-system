@@ -1,5 +1,3 @@
-import { FaUserEdit } from "react-icons/fa";
-import { MdLogout } from "react-icons/md";
 import { Link, NavLink } from "react-router-dom";
 import { ContextState } from "../../context/contextProvider";
 import { BASE_URL } from "../../data/baseURL";
@@ -41,7 +39,7 @@ const Navbar = () => {
                     {user?.name}
                   </p>
                 </div>
-                <ul className="dropdown-menu dashboard-menu">
+                {/* <ul className="dropdown-menu dashboard-menu">
                   <li>
                     <Link className="dropdown-item" to="">
                       <FaUserEdit /> Edit Account
@@ -60,7 +58,7 @@ const Navbar = () => {
                       <MdLogout /> Logout
                     </p>
                   </li>
-                </ul>
+                </ul> */}
               </li>
             </ul>
           </div>
@@ -88,27 +86,22 @@ const Navbar = () => {
           >
             <ul className="navbar-nav mb-2 mb-lg-0 fs-16 fw-700 font-open-sans">
               <li className="nav-item mx-2">
-                <Link className="nav-link" to="">
+                <Link className="nav-link" to="/dashboard">
                   Dashboard
                 </Link>
               </li>
 
               {user?.role === "admin" && (
                 <>
-                  <li className="nav-item dashboard mx-2">
-                    <p className="nav-link cursor-pointer">User</p>
-                    <ul className="dropdown-menu dashboard-menu">
-                      <li>
-                        <Link className="dropdown-item" to="admin/add-user">
-                          Add User
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className="dropdown-item" to="admin/manage-user">
-                          Manage User
-                        </Link>
-                      </li>
-                    </ul>
+                  <li className="nav-item mx-2">
+                    <NavLink
+                      className={({ isActive }) =>
+                        isActive ? "active-class nav-link" : "nav-link"
+                      }
+                      to="admin/manage-user"
+                    >
+                      User
+                    </NavLink>
                   </li>
 
                   <li className="nav-item mx-2">
@@ -119,6 +112,17 @@ const Navbar = () => {
                       to="admin/all-room"
                     >
                       Room
+                    </NavLink>
+                  </li>
+
+                  <li className="nav-item mx-2">
+                    <NavLink
+                      className={({ isActive }) =>
+                        isActive ? "active-class nav-link" : "nav-link"
+                      }
+                      to="admin/all-booking-info"
+                    >
+                      Booking Info
                     </NavLink>
                   </li>
 
@@ -184,26 +188,6 @@ const Navbar = () => {
                   Logout
                 </p>
               </li>
-
-              <div className="d-block d-md-none">
-                <li>
-                  <Link className="dropdown-item" to="">
-                    Edit Account
-                  </Link>
-                </li>
-                <li>
-                  <p
-                    className="dropdown-item cursor-pointer"
-                    onClick={() => {
-                      setUser({});
-                      localStorage.removeItem("userInfo");
-                      navigate("/");
-                    }}
-                  >
-                    Logout
-                  </p>
-                </li>
-              </div>
             </ul>
           </div>
         </div>

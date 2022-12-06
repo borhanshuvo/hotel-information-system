@@ -60,7 +60,7 @@ const Hotel = () => {
                     count={5}
                     size={24}
                     isHalf={true}
-                    value={1.5}
+                    value={hotel?.rating ? hotel?.rating : 5}
                     edit={false}
                     activeColor="#FF9F26"
                   />

@@ -1,4 +1,5 @@
 import React, { lazy, Suspense } from "react";
+import Confetti from "react-confetti";
 import "react-datepicker/dist/react-datepicker.css";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -7,6 +8,7 @@ import AddHotel from "./components/dashboard/addHotel";
 import AddRoom from "./components/dashboard/addRoom";
 import AddUser from "./components/dashboard/addUser";
 import Admin from "./components/dashboard/admin/admin";
+import AllBookingInfo from "./components/dashboard/allBookingInfo";
 import AllRoom from "./components/dashboard/allRoom";
 import Customer from "./components/dashboard/customer/customer";
 import Hotel from "./components/dashboard/hotel/hotel";
@@ -17,6 +19,7 @@ import ManageUser from "./components/dashboard/manageUser";
 import UserProfile from "./components/dashboard/userProfile";
 import { ContextState } from "./context/contextProvider";
 import AllHotels from "./pages/allHotels";
+import ConfirmOrder from "./pages/confirmOrder";
 import HotelById from "./pages/hotelById";
 import ResetPassword from "./pages/resetPassword";
 const Home = lazy(() => import("./pages/home"));
@@ -24,7 +27,9 @@ const Login = lazy(() => import("./pages/login"));
 const Dashboard = lazy(() => import("./pages/dashboard"));
 
 const App = () => {
-  const { user } = ContextState();
+  const { user, showConfetti } = ContextState();
+  const width = window.innerWidth - 20;
+  const height = window.innerHeight;
 
   return (
     <>
@@ -40,6 +45,11 @@ const App = () => {
         pauseOnHover
         className="fs-14 fw-700"
       />
+      <div>
+        {showConfetti && (
+          <Confetti width={width} height={height} tweenDuration={1000} />
+        )}
+      </div>
       <Routes>
         <Route
           path="/"
@@ -108,6 +118,7 @@ const App = () => {
           <Route path="admin/add-hotel" element={<AddHotel />} />
           <Route path="admin/all-room" element={<AllRoom />} />
           <Route path="admin/manage-hotel" element={<ManageHotel />} />
+          <Route path="admin/all-booking-info" element={<AllBookingInfo />} />
           <Route path="hotel/add-room" element={<AddRoom />} />
           <Route path="hotel/manage-room" element={<ManageRoom />} />
           <Route
@@ -115,6 +126,7 @@ const App = () => {
             element={user?.role === "hotel" ? <Profile /> : <UserProfile />}
           />
         </Route>
+        <Route path="order/:id" element={<ConfirmOrder />} />
       </Routes>
     </>
   );

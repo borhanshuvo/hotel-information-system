@@ -28,7 +28,6 @@ const SingleRoom = ({ room, index }) => {
     formData.append("bedPrice", data.bedPrice);
     formData.append("discount", data.discount);
     formData.append("numberOfBed", data.numberOfBed);
-    formData.append("numberOfRoom", data.numberOfRoom);
     formData.append("roomAmenities", data.roomAmenities);
     formData.append("roomImage", roomImage);
 
@@ -76,7 +75,6 @@ const SingleRoom = ({ room, index }) => {
         <td>{room?.name}</td>
         <td>{room?.adult}</td>
         <td>{room?.child}</td>
-        <td>{room?.numberOfRoom}</td>
         <td>{room?.price}</td>
         <td>{room?.numberOfBed}</td>
         <td>{room?.bedPrice}</td>
@@ -188,22 +186,6 @@ const SingleRoom = ({ room, index }) => {
                 </div>
 
                 <div className="mb-3">
-                  <p htmlFor="numberOfRoom" className="form-label text-start">
-                    Number Of Room
-                  </p>
-                  <input
-                    type="number"
-                    min={1}
-                    className="form-control"
-                    defaultValue={room?.numberOfRoom}
-                    id="numberOfRoom"
-                    autoComplete="off"
-                    {...register("numberOfRoom", { required: true })}
-                  />
-                  {errors.numberOfRoom && <span>This field is required</span>}
-                </div>
-
-                <div className="mb-3">
                   <p htmlFor="price" className="form-label text-start">
                     Room Price
                   </p>
@@ -257,6 +239,7 @@ const SingleRoom = ({ room, index }) => {
                   </p>
                   <input
                     type="number"
+                    max={100}
                     min={0}
                     className="form-control"
                     defaultValue={room?.discount}

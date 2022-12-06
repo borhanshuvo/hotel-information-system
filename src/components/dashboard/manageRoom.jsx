@@ -41,7 +41,6 @@ const ManageRoom = () => {
             <th scope="col">Name</th>
             <th scope="col">Adult</th>
             <th scope="col">Child</th>
-            <th scope="col">Number of Room</th>
             <th scope="col">Room Price</th>
             <th scope="col">Number of Bed</th>
             <th scope="col">Bed Price</th>

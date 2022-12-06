@@ -9,6 +9,7 @@ const ContextProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState();
   const [number, setNumber] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,6 +38,8 @@ const ContextProvider = ({ children }) => {
         navigate,
         loading,
         setLoading,
+        showConfetti,
+        setShowConfetti,
       }}
     >
       {children}

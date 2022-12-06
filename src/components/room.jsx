@@ -6,7 +6,7 @@ import { ContextState } from "../context/contextProvider";
 import { BASE_URL } from "../data/baseURL";
 
 const Room = ({ hotel, room, index }) => {
-  const { user, accessToken, navigate } = ContextState();
+  const { user, accessToken, navigate, setShowConfetti } = ContextState();
   const {
     register,
     handleSubmit,
@@ -53,16 +53,16 @@ const Room = ({ hotel, room, index }) => {
       customerName: user?.name,
       customerEmail: user?.email,
       customerPhoneNumber: user?.phoneNumber,
-      roomPrice: data.price,
-      numberOfBed: data.numberOfBed,
-      bedPrice: data.bedPrice,
+      rooms: room?._id,
+      hotels: hotel._id,
+      roomPrice: room?.price,
+      numberOfBed: parseInt(data.numberOfBed),
+      bedPrice: parseInt(room.bedPrice),
+      adult: parseInt(data.adult),
+      child: parseInt(data.child),
       totalDays: date,
-      from: `${startDate.getDate()}-${
-        startDate.getMonth() + 1
-      }-${startDate.getFullYear()}`,
-      to: `${new Date(endDate).getDate()}-${
-        new Date(endDate).getMonth() + 1
-      }-${new Date(endDate).getFullYear()}`,
+      from: startDate,
+      to: new Date(endDate),
       price: totalPrice,
       discount:
         hotelDiscount > 0 ? hotelDiscount : roomDiscount > 0 ? roomDiscount : 0,
@@ -202,6 +202,42 @@ const Room = ({ hotel, room, index }) => {
                         <option defaultValue={index + 1}>{index + 1}</option>
                       ))}
                     </select>
+                  </div>
+
+                  <div className="mb-3">
+                    <label htmlFor="adult" className="form-label">
+                      Adult ( {room?.adult} allow)
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control shadow-none"
+                      max={room?.adult}
+                      defaultValue={1}
+                      min={1}
+                      id="adult"
+                      {...register("adult", {
+                        required: true,
+                      })}
+                    />
+                    {errors.adult && <span>This field is required</span>}
+                  </div>
+
+                  <div className="mb-3">
+                    <label htmlFor="child" className="form-label">
+                      Child ( {room?.child} allow)
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control shadow-none"
+                      max={room?.child}
+                      defaultValue={0}
+                      min={0}
+                      id="child"
+                      {...register("child", {
+                        required: true,
+                      })}
+                    />
+                    {errors.child && <span>This field is required</span>}
                   </div>
 
                   <div className="mb-3">

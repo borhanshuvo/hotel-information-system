@@ -6,7 +6,7 @@ const Navbar = () => {
   const { user, setUser } = ContextState();
 
   return (
-    <nav className="navbar navbar-expand-lg sticky-top bg-light">
+    <nav className="navbar navbar-expand-lg bg-light">
       <div className="container">
         <Link className="navbar-brand fs-20 fw-700" to="/">
           Hotel Information System

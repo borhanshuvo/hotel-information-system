@@ -34,11 +34,11 @@ const AllRoom = () => {
           <tr>
             <th scope="col">#Sl</th>
             <th scope="col">Name</th>
+            <th scope="col">Room Price</th>
             <th scope="col">Adult</th>
             <th scope="col">Child</th>
-            <th scope="col">Number of Room</th>
             <th scope="col">Number of Bed</th>
-            <th scope="col">Price</th>
+            <th scope="col">Per Bed Price</th>
             <th scope="col">Discount</th>
             <th scope="col">Available</th>
           </tr>
@@ -48,11 +48,11 @@ const AllRoom = () => {
             <tr key={index}>
               <th className="fs-600">{index + 1}</th>
               <td>{room?.name}</td>
+              <td>{room?.price}</td>
               <td>{room?.adult}</td>
               <td>{room?.child}</td>
-              <td>{room?.numberOfRoom}</td>
               <td>{room?.numberOfBed}</td>
-              <td>{room?.price}</td>
+              <td>{room?.bedPrice}</td>
               <td>{room?.discount}</td>
               <td>{room?.available ? "Yes" : "No"}</td>
             </tr>

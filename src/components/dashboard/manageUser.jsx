@@ -59,52 +59,56 @@ const ManageUser = () => {
       </Helmet>
       <h1 className="fw-700 pt-5">Manage User</h1>
       <hr className="py-4" />
-      <table className="table table-striped table-hover text-center">
-        <thead className="table-dark">
-          <tr>
-            <th scope="col">#Sl</th>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Phone Number</th>
-            <th scope="col">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {allUsers?.map((user, index) => (
-            <tr key={index}>
-              <th className="fs-600">{index + 1}</th>
-              <td>{user?.name}</td>
-              <td>{user?.email}</td>
-              <td>{user?.phoneNumber}</td>
-              <td>
-                <input
-                  type="checkbox"
-                  defaultChecked={user?.status}
-                  onChange={() => {
-                    updateStatus(!user?.status, user?._id);
-                  }}
-                />{" "}
-                <span
-                  className={`badge ${
-                    user?.status ? "bg-success" : "bg-danger"
-                  }`}
-                >
-                  {user?.status ? "Active" : "In-active"}
-                </span>
-              </td>
-            </tr>
-          ))}
-          {loading && (
+      <div className="table-responsive">
+        <table className="table table-striped table-hover text-center">
+          <thead className="table-dark">
             <tr>
-              <td colSpan={5}>
-                <div className="spinner-border text-primary" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </div>
-              </td>
+              <th scope="col">#Sl</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Phone Number</th>
+              <th scope="col">Role</th>
+              <th scope="col">Status</th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {allUsers?.map((user, index) => (
+              <tr key={index}>
+                <th className="fs-600">{index + 1}</th>
+                <td>{user?.name}</td>
+                <td>{user?.email}</td>
+                <td>{user?.phoneNumber}</td>
+                <td>{user?.role}</td>
+                <td>
+                  <input
+                    type="checkbox"
+                    defaultChecked={user?.status}
+                    onChange={() => {
+                      updateStatus(!user?.status, user?._id);
+                    }}
+                  />{" "}
+                  <span
+                    className={`badge ${
+                      user?.status ? "bg-success" : "bg-danger"
+                    }`}
+                  >
+                    {user?.status ? "Active" : "In-active"}
+                  </span>
+                </td>
+              </tr>
+            ))}
+            {loading && (
+              <tr>
+                <td colSpan={6}>
+                  <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

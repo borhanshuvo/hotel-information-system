@@ -1,5 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { BASE_URL } from "../data/baseURL";
 
 const ContactUs = () => {
   const {
@@ -9,7 +11,22 @@ const ContactUs = () => {
   } = useForm();
 
   const getContact = (data, e) => {
-    console.log(data);
+    fetch(`${BASE_URL}/contact`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.success) {
+          toast.success(result.message);
+          e.target.reset();
+        } else {
+          toast.error(result.message);
+        }
+      });
   };
 
   return (
@@ -68,6 +85,7 @@ const ContactUs = () => {
               <div className="">
                 <input
                   type="submit"
+                  value="Send"
                   className="btn btn-base bg-base text-white px-5 py-2"
                 />
               </div>
