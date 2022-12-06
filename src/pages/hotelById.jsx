@@ -142,7 +142,7 @@ const HotelById = () => {
               onSubmit={handleSubmit(bookingInfoSearch)}
             >
               <div className="row align-items-end border shadow p-2 rounded">
-                <h5 className="mb-4 mt-2 text-center">Book Now</h5>
+                <h5 className="mb-4 mt-2 text-center">{hotel?.user?.name}</h5>
                 <hr />
                 <div className="col-12">
                   <label htmlFor="" className="form-label">
